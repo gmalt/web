@@ -1,5 +1,7 @@
 <template>
   <div>
+    <p>Click on the map where you want to find the elevation or look up by address with the search field.</p>
+
     <gmap-autocomplete
       @place_changed="updatePos">
     </gmap-autocomplete>
@@ -11,6 +13,7 @@
       @click="updatePos"
     >
       <gmap-marker
+        v-if="showMarker"
         :position="position"
         :draggable="true"
         @dragend="updatePos"
@@ -21,6 +24,7 @@
       <ul>
         <li>Latitude : {{ position.lat }}</li>
         <li>Longitude : {{ position.lng }}</li>
+        <li>Altitude : {{ alt }}</li>
       </ul>
     </div>
   </div>
@@ -29,10 +33,11 @@
 <script>
   import * as VueGoogleMaps from 'vue2-google-maps'
   import Vue from 'vue'
+  import AltService from '../services/AltService'
 
   Vue.use(VueGoogleMaps, {
     load: {
-      key: 'AIzaSyCeG8L5crkEuoj5H2upp1lVFW1xmlzCZo4',
+      key: process.env.GMAP_API_KEY,
       libraries: 'places'
     }
   })
@@ -44,16 +49,33 @@
     name: 'gmalt-map',
     methods: {
       updatePos (newPos) {
+        this.showMarker = true
         newPos = newPos.latLng || newPos.geometry.location || defaultLatLng
         this.position = {
           lat: newPos.lat(),
           lng: newPos.lng()
         }
+        this.fetchAltitude()
+      },
+      fetchAltitude () {
+        this.loading = true
+        const requestedPosition = this.position
+        AltService
+          .get(this.position)
+          .then((json) => {
+            if (requestedPosition === this.position) {
+              this.loading = false
+              this.alt = json.alt
+            }
+          })
       }
     },
     data () {
       return {
-        position: defaultPos
+        showMarker: false,
+        position: defaultPos,
+        alt: null,
+        loading: false
       }
     }
   }
@@ -66,9 +88,5 @@
     box-sizing: border-box;
     -webkit-box-sizing:border-box;
     -moz-box-sizing: border-box;
-  }
-
-  .vue-map-container {
-    margin: auto
   }
 </style>
