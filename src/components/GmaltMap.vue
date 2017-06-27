@@ -1,13 +1,13 @@
 <template>
   <div>
-    <p>Click on the map where you want to find the elevation or look up by address with the search field.</p>
+    <p>Click on the map where you want to find the elevation, look up by address with the search field or search by latitude and longitude.</p>
 
     <gmap-autocomplete
       @place_changed="updatePos">
     </gmap-autocomplete>
 
     <gmap-map
-      :center="position"
+      :center="center"
       :zoom="7"
       style="width: 100%; height: 30vh;"
       @click="updatePos"
@@ -20,12 +20,23 @@
       ></gmap-marker>
     </gmap-map>
 
+    <form v-on:submit.prevent="fetchAltitude">
+      <div>
+        <label for="form-latitude">Latitude</label>
+        <input type="number" step="any" min="-90" max="90" id="form-latitude" v-model.number="position.lat" required />
+      </div>
+
+      <div>
+        <label for="form-longitude">Longitude</label>
+        <input type="number" step="any" min="-180" max="180" id="form-longitude" v-model.number="position.lng"  required />
+      </div>
+
+      <div>
+        <input type="submit" value="Search" />
+      </div>
+    </form>
     <div>
-      <ul>
-        <li>Latitude : {{ position.lat }}</li>
-        <li>Longitude : {{ position.lng }}</li>
-        <li>Altitude : {{ alt }}</li>
-      </ul>
+      <p>Altitude : <strong>{{ alt ? alt : 'No value' }}</strong></p>
     </div>
   </div>
 </template>
@@ -58,9 +69,11 @@
         this.fetchAltitude()
       },
       fetchAltitude () {
-        this.loading = true
         const requestedPosition = this.position
-        AltService
+        this.loading = true
+        this.showMarker = true
+        this.center = this.position
+        return AltService
           .get(this.position)
           .then((json) => {
             if (requestedPosition === this.position) {
@@ -68,12 +81,16 @@
               this.alt = json.alt
             }
           })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
     data () {
       return {
         showMarker: false,
-        position: defaultPos,
+        position: { lat: null, lng: null },
+        center: defaultPos,
         alt: null,
         loading: false
       }
