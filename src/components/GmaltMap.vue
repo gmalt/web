@@ -44,6 +44,7 @@
 <script>
   import * as VueGoogleMaps from 'vue2-google-maps'
   import Vue from 'vue'
+
   import AltService from '../services/AltService'
 
   Vue.use(VueGoogleMaps, {
