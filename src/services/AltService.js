@@ -3,8 +3,8 @@ import * as resolveUrl from 'resolve-url'
 const apiUrl = resolveUrl(process.env.API_URL, '/altitude')
 
 export default {
-  get (position) {
-    return fetch(apiUrl + '?lat=' + position.lat + '&lng=' + position.lng)
+  get (lat, lng) {
+    return fetch(apiUrl + '?lat=' + lat + '&lng=' + lng)
       .then(function (response) {
         if (response.status >= 200 && response.status < 300) {
           return response

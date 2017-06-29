@@ -2,13 +2,15 @@
   <div id="app">
     <img src="./assets/logo.png">
     <gmalt-map></gmalt-map>
-    <gmalt-search :lat="position.lat" :lng="position.lng" @search="updatePos"></gmalt-search>
-    <p>Parent : {{ position.lat }}, {{ position.lng }}</p>
+    <gmalt-search :lat="lat" :lng="lng" @search="updatePos"></gmalt-search>
+    <p>Parent : {{ lat }}, {{ lng }}</p>
     <p>Alt : {{ alt }}</p>
+    <gmalt-geoloc @geoloc="updatePos"></gmalt-geoloc>
   </div>
 </template>
 
 <script>
+import GmaltGeoloc from './components/GmaltGeoloc'
 import GmaltMap from './components/GmaltMap'
 import GmaltSearch from './components/GmaltSearch'
 
@@ -17,15 +19,18 @@ import AltService from './services/AltService'
 export default {
   name: 'app',
   components: {
+    GmaltGeoloc,
     GmaltMap,
     GmaltSearch
   },
   methods: {
-    updatePos (position) {
-      this.position = position
-      const requestedPosition = position
+    updatePos (lat, lng) {
+      this.lat = lat
+      this.lng = lng
+      this.loading = true
+      const requestedPosition = this.position
       return AltService
-        .get(this.position)
+        .get(lat, lng)
         .then((json) => {
           if (requestedPosition === this.position) {
             this.loading = false
@@ -37,10 +42,17 @@ export default {
         })
     }
   },
+  computed: {
+    position () {
+      return {lat: this.lat, lng: this.lng}
+    }
+  },
   data () {
     return {
-      position: {lat: null, lng: null},
-      alt: null
+      lat: null,
+      lng: null,
+      alt: null,
+      loading: false
     }
   }
 }
