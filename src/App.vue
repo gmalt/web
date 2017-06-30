@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <gmalt-map></gmalt-map>
+    <p>Click on the map where you want to find the elevation, look up by address with the search field or search by latitude and longitude.</p>
+    <gmalt-map :lat="lat" :lng="lng" @lookup="updatePos"></gmalt-map>
     <gmalt-search :lat="lat" :lng="lng" @search="updatePos"></gmalt-search>
-    <p>Parent : {{ lat }}, {{ lng }}</p>
+    <p>Current position : {{ lat }}, {{ lng }}</p>
     <p>Alt : {{ alt }}</p>
     <gmalt-geoloc @geoloc="updatePos"></gmalt-geoloc>
   </div>
