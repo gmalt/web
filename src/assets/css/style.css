@@ -45,6 +45,10 @@ p {
   margin-top: 0;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 header h2 {
   width: 540px;
   margin-top: 0;
@@ -94,6 +98,37 @@ header a.button {
   background: transparent url(../img/github-button.png) 0 0 no-repeat;
 }
 
+.btn {
+  background: #2c80d0;
+  background-image: -webkit-linear-gradient(top, #2c80d0, #2c7bd8);
+  background-image: -moz-linear-gradient(top, #2c80d0, #2c7bd8);
+  background-image: -ms-linear-gradient(top, #2c80d0, #2c7bd8);
+  background-image: -o-linear-gradient(top, #2c80d0, #2c7bd8);
+  background-image: linear-gradient(to bottom, #2c80d0, #2c7bd8);
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border: solid #dedede 2px;
+  font-size: 16px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:disabled, .btn:disabled:hover {
+  background: #dedede;
+  cursor: not-allowed;
+}
+
+.btn .fa {
+  padding-right: 10px;
+}
+
 a.button {
   width: 134px;
   height: 58px;
@@ -117,6 +152,14 @@ main {
 
 .clearfix {
   display: block;
+}
+
+.clearfix:after {
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  content: '.';
 }
 
 #main-content {
@@ -154,7 +197,31 @@ aside a.button {
   letter-spacing: -1px;
 }
 
-aside#sidebar p.repo-owner, aside#sidebar p.repo-owner a {
+#main-content h1:before {
+  padding-right: 0.3em;
+  margin-left: -0.9em;
+  color: #9ddcff;
+  content: "/";
+}
+
+#main-content h2 {
+  margin-bottom: 8px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #474747;
+  text-indent: 4px;
+  margin-left: 30px;
+}
+
+#main-content h2:before {
+  padding-right: 0.3em;
+  margin-left: -1.5em;
+  content: "//";
+  color: #9ddcff;
+}
+
+aside#sidebar p.repo-owner, aside#sidebar p.repo-owner a, #main-content a {
   font-weight: bold;
 }
 
@@ -171,6 +238,8 @@ aside#sidebar p.repo-owner, aside#sidebar p.repo-owner a {
 input[type="text"], input[type="number"] {
   display: block;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
   font-family: sans-serif;
   font-size: 18px;
   box-shadow: none;
@@ -183,4 +252,111 @@ input[type="text"]:focus, input[type="text"].focus, input[type="number"]:focus, 
   border: solid 1px #275da1;
   box-shadow: 0 0 5px 1px #2e7bcf;
   outline: none;
+}
+
+@media only screen and (max-width: 959px) and (min-width: 768px) {
+  .inner {
+    width: 740px;
+  }
+
+  header h1 {
+    font-size: 60px;
+  }
+
+  header h1, header h2 {
+    width: 390px;
+  }
+
+  header h2 {
+    font-size: 30px;
+  }
+
+  .inner {
+    width: 740px;
+  }
+
+  #main-content {
+    width: 490px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  header {
+    padding: 20px 0;
+  }
+
+  header .inner {
+    position: relative;
+  }
+
+  .inner {
+    width: 93%;
+  }
+
+  header h1 {
+    font-size: 48px;
+  }
+
+  header h1, header h2 {
+    width: 100%;
+  }
+
+  header h2 {
+    font-size: 24px;
+  }
+
+  header h1, header h2 {
+    width: 100%;
+  }
+
+  header a.button {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
+    margin-top: 15px;
+    font-size: 13px;
+    line-height: 1;
+    color: #2879d0;
+    text-align: center;
+    background-color: #9ddcff;
+    background-image: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+  }
+
+  header a.button small {
+    display: inline;
+    font-size: 13px;
+  }
+
+  .inner {
+    width: 93%;
+    text-align: center;
+    max-width: 360px;
+  }
+
+  #main-content, aside#sidebar {
+    float: none;
+    width: 100% !important;
+  }
+
+  aside#sidebar {
+    min-height: 0;
+    padding: 20px 0;
+    margin-top: 20px;
+    background-image: none;
+    border-top: solid 1px #ddd;
+  }
+
+  #main-content, aside#sidebar {
+    float: none;
+    width: 100% !important;
+  }
+
+  aside#sidebar a.button {
+    display: none;
+  }
 }

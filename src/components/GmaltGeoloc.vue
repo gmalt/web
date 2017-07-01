@@ -1,5 +1,7 @@
 <template>
-  <button type="button" @click="geolocalize()" :disabled="disabled">Geoloc</button>
+  <button type="button" class="btn" @click="geolocalize()" :disabled="disabled">
+    <i class="fa fa-crosshairs" aria-hidden="true"></i> Use your position
+  </button>
 </template>
 
 <script>

@@ -7,7 +7,7 @@
 
     <gmap-map
       :center="(position.lat && position.lng) ? position : center"
-      :zoom="7"
+      :zoom="(position.lat && position.lng) ? 16 : 7"
       style="width: 100%; height: 30vh;"
       @click="updatePos"
     >
