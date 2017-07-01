@@ -83,6 +83,7 @@
 
 <script>
 import './assets/css/style.css'
+
 import GmaltGeoloc from './components/GmaltGeoloc'
 import GmaltMap from './components/GmaltMap'
 import GmaltSearch from './components/GmaltSearch'
@@ -107,7 +108,7 @@ export default {
       return AltService
         .get(lat, lng)
         .then((json) => {
-          if (requestedPosition === this.position) {
+          if (JSON.stringify(requestedPosition) === JSON.stringify(this.position)) {
             this.loading = false
             this.alt = json.alt
           }

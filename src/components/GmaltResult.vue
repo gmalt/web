@@ -16,7 +16,7 @@
     </div>
     <div class="card-item">
       <span class="card-item-title">Address :</span>
-      <span class="card-item-value">
+      <span class="card-item-value card-item-value-address">
         <strong v-if="address">{{ address }}</strong>
         <span v-if="!address">No value</span>
       </span>
@@ -31,9 +31,34 @@
 </template>
 
 <script>
+  import GeocodeService from '../services/GeocodeService'
+
   export default {
     name: 'gmalt-result',
     props: ['lat', 'lng', 'alt', 'loading'],
+    watch: {
+      position () {
+        if (this.lng && this.lat) {
+          GeocodeService
+            .get(this.lat, this.lng)
+            .then((result) => {
+              this.setAddress(result[0], result[1])
+            })
+        }
+      }
+    },
+    methods: {
+      setAddress (requestedPosition, address) {
+        if (JSON.stringify(requestedPosition) === JSON.stringify(this.position)) {
+          this.address = address
+        }
+      }
+    },
+    computed: {
+      position () {
+        return {lat: this.lat, lng: this.lng}
+      }
+    },
     data () {
       return {
         address: ''
@@ -58,6 +83,11 @@
 
   .card-item-value {
     float: right;
+  }
+
+  .card-item-value-address {
+    width: calc(100% - 70px);
+    text-align: right;
   }
 
   .card-item--result {
