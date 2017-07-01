@@ -1,11 +1,12 @@
 <template>
   <div>
     <gmap-autocomplete
-      @place_changed="updatePos">
+      @place_changed="updatePos"
+      :placeholder="'Write an address'">
     </gmap-autocomplete>
 
     <gmap-map
-      :center="position || center"
+      :center="(position.lat && position.lng) ? position : center"
       :zoom="7"
       style="width: 100%; height: 30vh;"
       @click="updatePos"

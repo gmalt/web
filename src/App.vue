@@ -1,16 +1,44 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <p>Click on the map where you want to find the elevation, look up by address with the search field or search by latitude and longitude.</p>
-    <gmalt-map :lat="lat" :lng="lng" @lookup="updatePos"></gmalt-map>
-    <gmalt-search :lat="lat" :lng="lng" @search="updatePos"></gmalt-search>
-    <p>Current position : {{ lat }}, {{ lng }}</p>
-    <p>Alt : {{ alt }}</p>
-    <gmalt-geoloc @geoloc="updatePos"></gmalt-geoloc>
+  <div>
+    <header>
+      <div class="inner">
+        <img src="./assets/img/logo.svg" />
+        <h1>Gmalt</h1>
+        <h2>Get My ALTitude</h2>
+        <a href="https://github.com/gmalt" class="button">
+          <small>View project on</small> GitHub
+        </a>
+      </div>
+    </header>
+
+    <main id="app">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p class="intro">Either, Click on the map or look up by address or search by latitude and longitude or use your geolocation.</p>
+          <gmalt-map :lat="lat" :lng="lng" @lookup="updatePos"></gmalt-map>
+          <gmalt-search :lat="lat" :lng="lng" @search="updatePos"></gmalt-search>
+          <p>Current position : {{ lat }}, {{ lng }}</p>
+          <p>Alt : {{ alt }}</p>
+          <gmalt-geoloc @geoloc="updatePos"></gmalt-geoloc>
+        </section>
+        <aside id="sidebar">
+          <a href="https://github.com/gmalt/cli" class="button">
+            <small>Project</small>
+            Gmalt CLI
+          </a>
+          <a href="https://github.com/gmalt/api" class="button">
+            <small>Project</small>
+            Gmalt API
+          </a>
+          <p class="repo-owner">Theme <a href="https://github.com/pages-themes/architect">architect</a> from <a href="https://github.com/pages-themes">pages-themes</a>.</p>
+        </aside>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
+import './assets/css/style.css'
 import GmaltGeoloc from './components/GmaltGeoloc'
 import GmaltMap from './components/GmaltMap'
 import GmaltSearch from './components/GmaltSearch'
@@ -60,12 +88,4 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

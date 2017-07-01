@@ -2,12 +2,12 @@
   <form v-on:submit.prevent="search()">
       <div>
         <label for="form-latitude">Latitude</label>
-        <input type="number" step="any" min="-90" max="90" id="form-latitude" :value="lat" v-on:input="fieldLat = parseFloat($event.target.value)" required />
+        <input type="number" step="any" min="-90" max="90" id="form-latitude" placeholder="Latitude" :value="lat" v-on:input="fieldLat = parseFloat($event.target.value)" required />
       </div>
 
       <div>
         <label for="form-longitude">Longitude</label>
-        <input type="number" step="any" min="-180" max="180" id="form-longitude" :value="lng" v-on:input="fieldLng = parseFloat($event.target.value)" required />
+        <input type="number" step="any" min="-180" max="180" id="form-longitude" placeholder="Longitude" :value="lng" v-on:input="fieldLng = parseFloat($event.target.value)" required />
       </div>
 
       <div>
