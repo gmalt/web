@@ -21,10 +21,11 @@
         <span v-if="!address">No value</span>
       </span>
     </div>
-    <div class="card-item card-item--result" v-if="alt">
-      <span class="card-item-value">
-        <span>Altitude :</span>
-        <strong>{{ alt }} m</strong>
+    <div class="card-item card-item--result">
+      <span class="card-item-title">Altitude :</span>
+      <span class="card-item-value">  
+        <strong v-if="alt">{{ alt }} m</strong>
+        <span v-if="!alt">No value</span>
       </span>
     </div>
   </div>
