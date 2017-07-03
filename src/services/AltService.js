@@ -1,7 +1,8 @@
 import * as resolveUrl from 'resolve-url'
 import HttpService from './HttpService'
 
-const apiUrl = resolveUrl(process.env.API_URL, '/altitude')
+const resolveUrlTool = resolveUrl.default || resolveUrl
+const apiUrl = resolveUrlTool(process.env.API_URL, '/altitude')
 
 export default {
   get (lat, lng) {

@@ -23,7 +23,7 @@
     </div>
     <div class="card-item card-item--result">
       <span class="card-item-title">Altitude :</span>
-      <span class="card-item-value">  
+      <span class="card-item-value">
         <strong v-if="alt">{{ alt }} m</strong>
         <span v-if="!alt">No value</span>
       </span>
