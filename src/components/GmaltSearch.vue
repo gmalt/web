@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="search()">
+  <form v-on:submit.prevent="search($event.target)">
       <div class="form-field">
         <label for="form-latitude">Latitude</label>
         <input type="number" step="any" min="-90" max="90" id="form-latitude" placeholder="Latitude" :value="lat" v-on:input="fieldLat = parseFloat($event.target.value)" required />
@@ -23,8 +23,10 @@
     name: 'gmalt-search',
     props: ['lat', 'lng'],
     methods: {
-      search () {
-        this.$emit('search', this.fieldLat || this.lat, this.fieldLng || this.lng)
+      search (form) {
+        if (form.checkValidity()) {
+          this.$emit('search', this.fieldLat || this.lat, this.fieldLng || this.lng)
+        }
       }
     },
     data () {
