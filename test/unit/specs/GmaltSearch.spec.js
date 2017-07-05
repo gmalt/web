@@ -1,15 +1,6 @@
 import Vue from 'vue'
 import GmaltSearch from '@/components/GmaltSearch.vue'
-
-function getVm (Component, propsData) {
-  const Constructor = Vue.extend(Component)
-  return new Constructor({ propsData: propsData }).$mount()
-}
-
-// helper function that mounts and returns the rendered element
-function getRenderedEl (Component, propsData) {
-  return getVm(Component, propsData).$el
-}
+import * as helper from '../helper'
 
 describe('GmaltSearch', () => {
   // Inspect the raw component options
@@ -34,21 +25,21 @@ describe('GmaltSearch', () => {
   })
 
   it('renders correctly with different props', () => {
-    let searchEl = getRenderedEl(GmaltSearch, {lat: 48.1, lng: 9.5})
+    let searchEl = helper.getRenderedEl(GmaltSearch, {lat: 48.1, lng: 9.5})
     expect(searchEl.querySelector('#form-latitude').value).to.equal('48.1')
     expect(searchEl.querySelector('#form-longitude').value).to.equal('9.5')
 
-    searchEl = getRenderedEl(GmaltSearch, {lat: -56.4, lng: -120.4})
+    searchEl = helper.getRenderedEl(GmaltSearch, {lat: -56.4, lng: -120.4})
     expect(searchEl.querySelector('#form-latitude').value).to.equal('-56.4')
     expect(searchEl.querySelector('#form-longitude').value).to.equal('-120.4')
 
-    searchEl = getRenderedEl(GmaltSearch, {lat: 'invalid', lng: 'invalid'})
+    searchEl = helper.getRenderedEl(GmaltSearch, {lat: 'invalid', lng: 'invalid'})
     expect(searchEl.querySelector('#form-latitude').value).to.equal('')
     expect(searchEl.querySelector('#form-longitude').value).to.equal('')
   })
 
   it('should emit the props as position on form submit', () => {
-    const searchVm = getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
+    const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
     searchVm.$on('search', (lat, lng) => {
       expect(lat).to.equal(48.1)
       expect(lng).to.equal(9.5)
@@ -57,7 +48,7 @@ describe('GmaltSearch', () => {
   })
 
   it('should emit the input as position on form submit', () => {
-    const searchVm = getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
+    const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
 
     // Listen for seach event and check emitted values
     searchVm.$on('search', (lat, lng) => {
@@ -85,7 +76,7 @@ describe('GmaltSearch', () => {
   })
 
   it('should require a valid latitude', () => {
-    const searchVm = getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
+    const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
     const latitudeForm = searchVm.$el.querySelector('#form-latitude')
     latitudeForm.value = -91
     expect(latitudeForm.checkValidity()).to.equal(false)
@@ -100,7 +91,7 @@ describe('GmaltSearch', () => {
   })
 
   it('should require a valid longitude', () => {
-    const searchVm = getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
+    const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
     const longitudeForm = searchVm.$el.querySelector('#form-longitude')
     longitudeForm.value = -181
     expect(longitudeForm.checkValidity()).to.equal(false)
@@ -115,7 +106,7 @@ describe('GmaltSearch', () => {
   })
 
   it('should not emit on invalid form submit', done => {
-    const searchVm = getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
+    const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
 
     // Listen for emit event
     let searchEmitResult = {emitted: false}
