@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import GmaltSearch from '@/components/GmaltSearch.vue'
 import * as helper from '../helper'
 
@@ -47,13 +46,14 @@ describe('GmaltSearch', () => {
     searchVm.$el.querySelector('button.btn').click()
   })
 
-  it('should emit the input as position on form submit', () => {
+  it('should emit the input as position on form submit', done => {
     const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
 
     // Listen for seach event and check emitted values
     searchVm.$on('search', (lat, lng) => {
       expect(lat).to.equal(-56.7)
       expect(lng).to.equal(-176)
+      done()
     })
 
     const latitudeForm = searchVm.$el.querySelector('#form-latitude')
@@ -105,7 +105,7 @@ describe('GmaltSearch', () => {
     expect(longitudeForm.checkValidity()).to.equal(true)
   })
 
-  it('should not emit on invalid form submit', done => {
+  it('should not emit on invalid form submit', () => {
     const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
 
     // Listen for emit event
@@ -129,11 +129,10 @@ describe('GmaltSearch', () => {
     latitudeForm.dispatchEvent(event)
     longitudeForm.dispatchEvent(event)
 
-    // Wait for next tick to check if search emitted
-    Vue.nextTick(() => {
-      searchVm.$el.querySelector('button.btn').click()
-      expect(searchEmitResult.emitted).to.equal(false)
-      done()
-    })
+    // Submit form
+    searchVm.$el.querySelector('button.btn').click()
+
+    // Check search not triggered with invalid input
+    expect(searchEmitResult.emitted).to.equal(false)
   })
 })
