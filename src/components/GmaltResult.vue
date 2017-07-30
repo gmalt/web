@@ -39,6 +39,7 @@
     props: ['lat', 'lng', 'alt', 'loading'],
     watch: {
       position () {
+        this.address = ''
         if (this.lng && this.lat) {
           GeocodeService
             .get(this.lat, this.lng)
