@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="gmalt-app">
     <header>
       <div class="inner">
         <img src="../static/logo.svg" />
