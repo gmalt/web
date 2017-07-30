@@ -1,5 +1,7 @@
 # gmalt-web
 
+[![Build Status](https://travis-ci.org/gmalt/web.svg?branch=master)](https://travis-ci.org/gmalt/web)
+
 > gmalt demo website
 
 ## Build Setup
