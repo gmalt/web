@@ -25,6 +25,7 @@ module.exports = {
     const devServer = browser.globals.devServerURL
 
     browser
+      .resizeWindow(1280, 800)
       .url(devServer)
       .waitForElementVisible('.vue-map-container .gm-style', 8000)
       .execute((selector) => {
@@ -52,9 +53,9 @@ module.exports = {
     browser.moveToElement('.vue-map', relX, relY).mouseButtonClick()
     browser.pause(10000)
     browser
-      .assert.containsText('.card .card-item:nth-child(1) strong', '48.857487002645485')
-      .assert.containsText('.card .card-item:nth-child(2) strong', '2.35107421875')
-      .assert.containsText('.card .card-item:nth-child(3) strong', '1 Rue de la Coutellerie, 75004 Paris, France')
+      .assert.containsText('.card .card-item:nth-child(1) strong', '48.86031047029195')
+      .assert.containsText('.card .card-item:nth-child(2) strong', '2.3455810546875')
+      .assert.containsText('.card .card-item:nth-child(3) strong', '36 Rue des Bourdonnais, 75001 Paris, France')
       .assert.elementPresent('main')
   }
 }
