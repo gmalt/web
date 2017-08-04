@@ -40,7 +40,7 @@
     props: ['lat', 'lng'],
     methods: {
       updatePos (newPos) {
-        newPos = newPos.latLng || newPos.geometry.location || defaultLatLng
+        newPos = (newPos && (newPos.latLng || (newPos.geometry && newPos.geometry.location))) || defaultLatLng
         this.$emit('lookup', newPos.lat(), newPos.lng())
       }
     },

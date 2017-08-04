@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import GmaltSearch from '@/components/GmaltSearch.vue'
 import * as helper from '../helper'
 
@@ -105,7 +106,7 @@ describe('GmaltSearch', () => {
     expect(longitudeForm.checkValidity()).to.equal(true)
   })
 
-  it('should not emit on invalid form submit', () => {
+  it('should not emit on invalid form submit', done => {
     const searchVm = helper.getVm(GmaltSearch, {lat: 48.1, lng: 9.5})
 
     // Listen for emit event
@@ -133,6 +134,9 @@ describe('GmaltSearch', () => {
     searchVm.$el.querySelector('button.btn').click()
 
     // Check search not triggered with invalid input
-    expect(searchEmitResult.emitted).to.equal(false)
+    Vue.nextTick(() => {
+      expect(searchEmitResult.emitted).to.equal(false)
+      done()
+    })
   })
 })
