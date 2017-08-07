@@ -25,7 +25,7 @@
               <div class="hr-sect">OR</div>
               <gmalt-search :lat="lat" :lng="lng" @search="updatePos"></gmalt-search>
             </div>
-            <gmalt-result :lat="lat" :lng="lng" :alt="alt" :loading="loading"></gmalt-result>
+            <gmalt-result :lat="lat" :lng="lng"></gmalt-result>
           </div>
 
           <h2>Description</h2>
@@ -89,8 +89,6 @@ import GmaltMap from './components/GmaltMap'
 import GmaltSearch from './components/GmaltSearch'
 import GmaltResult from './components/GmaltResult'
 
-import AltService from './services/AltService'
-
 export default {
   name: 'app',
   components: {
@@ -103,19 +101,6 @@ export default {
     updatePos (lat, lng) {
       this.lat = lat
       this.lng = lng
-      this.loading = true
-      const requestedPosition = this.position
-      return AltService
-        .get(lat, lng)
-        .then((json) => {
-          if (JSON.stringify(requestedPosition) === JSON.stringify(this.position)) {
-            this.loading = false
-            this.alt = json.alt
-          }
-        })
-        .catch((err) => {
-          this.alt = err + ''
-        })
     }
   },
   computed: {
@@ -127,8 +112,7 @@ export default {
     return {
       lat: null,
       lng: null,
-      alt: null,
-      loading: false
+      alt: null
     }
   }
 }

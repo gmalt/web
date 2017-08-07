@@ -33,18 +33,28 @@
 
 <script>
   import GeocodeService from '../services/GeocodeService'
+  import AltService from '../services/AltService'
 
   export default {
     name: 'gmalt-result',
-    props: ['lat', 'lng', 'alt', 'loading'],
+    props: ['lat', 'lng'],
     watch: {
       position () {
         this.address = ''
         if (this.lng && this.lat) {
+          const requestedPosition = this.position
           GeocodeService
             .get(this.lat, this.lng)
             .then((result) => {
               this.setAddress(result[0], result[1])
+            })
+          AltService
+            .get(this.lat, this.lng)
+            .then((json) => {
+              this.setAlt(requestedPosition, json.alt)
+            })
+            .catch((err) => {
+              this.alt = err + ''
             })
         }
       }
@@ -53,6 +63,11 @@
       setAddress (requestedPosition, address) {
         if (JSON.stringify(requestedPosition) === JSON.stringify(this.position)) {
           this.address = address
+        }
+      },
+      setAlt (requestedPosition, altitude) {
+        if (JSON.stringify(requestedPosition) === JSON.stringify(this.position)) {
+          this.alt = altitude
         }
       }
     },
@@ -63,7 +78,8 @@
     },
     data () {
       return {
-        address: ''
+        address: '',
+        alt: ''
       }
     }
   }
