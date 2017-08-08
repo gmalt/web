@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="map-content">
     <gmap-autocomplete
       @place_changed="updatePos"
       :placeholder="'Write an address'">

@@ -1,7 +1,7 @@
 let helper = require('../helper')
 
 module.exports = {
-  'click on map updates altitude': function (browser) {
+  'click on map updates result': function (browser) {
     const devServer = browser.globals.devServerURL
 
     browser
@@ -50,8 +50,44 @@ module.exports = {
       .mouseButtonClick()
 
     browser
+      .waitForElementPresent('.card .card-item:nth-child(1) strong', 3000)
+      .waitForElementPresent('.card .card-item:nth-child(2) strong', 3000)
+      .waitForElementPresent('.card .card-item:nth-child(3) strong', 3000)
+      .waitForElementPresent('.card .card-item:nth-child(4) strong', 3000)
+
+    browser
+      .assert.value('#form-latitude', '48.86031047029195')
+      .assert.value('#form-longitude', '2.3455810546875')
+      .assert.containsText('.card .card-item:nth-child(1) strong', '48.86031047029195')
+      .assert.containsText('.card .card-item:nth-child(2) strong', '2.3455810546875')
+      .assert.containsText('.card .card-item:nth-child(3) strong', '36 Rue des Bourdonnais, 75001 Paris, France')
+      .assert.containsText('.card .card-item:nth-child(4) strong', '234 m')
+      .end()
+  },
+
+  'search by address updates result': function (browser) {
+    const devServer = browser.globals.devServerURL
+
+    browser
+      .url(devServer)
+      .waitForElementVisible('.vue-map-container .gm-style', 8000)
+      .setValue('#map-content input[type="text"]', '31 rue de rome Paris')
+      .waitForElementVisible('.pac-container .pac-item:first-child', 3000)
+      .execute(helper.loadSinon(`
+        let stubedFetch = sinon.stub(window, 'fetch', function() {           
+           return Promise.resolve({status: 200, json: function() { return {alt: 345} }})
+        });
+
+        let sinonLoaded = document.createElement('div')
+        sinonLoaded.style.visibility = 'hidden'
+        sinonLoaded.id = 'sinonLoaded'
+        document.head.appendChild(sinonLoaded)
+      `))
+      .waitForElementPresent('#sinonLoaded', 3000)
       .execute(`
-        server.respond()
+        var inputSearch = document.querySelector('#map-content input[type="text"]');
+        google.maps.event.trigger(inputSearch, 'keydown', {keyCode:40});
+        google.maps.event.trigger(inputSearch, 'keydown', {keyCode:13});
       `)
 
     browser
@@ -61,10 +97,12 @@ module.exports = {
       .waitForElementPresent('.card .card-item:nth-child(4) strong', 3000)
 
     browser
-      .assert.containsText('.card .card-item:nth-child(1) strong', '48.86031047029195')
-      .assert.containsText('.card .card-item:nth-child(2) strong', '2.3455810546875')
-      .assert.containsText('.card .card-item:nth-child(3) strong', '36 Rue des Bourdonnais, 75001 Paris, France')
-      .assert.containsText('.card .card-item:nth-child(4) strong', '234 m')
+      .assert.value('#form-latitude', '48.8769429')
+      .assert.value('#form-longitude', '2.323093599999993')
+      .assert.containsText('.card .card-item:nth-child(1) strong', '48.8769429')
+      .assert.containsText('.card .card-item:nth-child(2) strong', '2.323093599999993')
+      .assert.containsText('.card .card-item:nth-child(3) strong', '31 Rue de Rome, 75008 Paris, France')
+      .assert.containsText('.card .card-item:nth-child(4) strong', '345 m')
       .end()
   }
 }
