@@ -11,7 +11,7 @@
       </div>
 
       <div>
-        <button type="submit" class="btn">
+        <button id="search-submit" type="submit" class="btn">
           <i class="fa fa-search" aria-hidden="true"></i> Search
         </button>
       </div>
