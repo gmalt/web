@@ -33,7 +33,7 @@ module.exports = {
       .setValue('#map-content input[type="text"]', '31 rue de rome Paris')
       .waitForElementVisible('.pac-container .pac-item:first-child', 3000)
       .execute(helper.loadSinon(`
-        let stubedFetch = sinon.stub(window, 'fetch', function() {           
+        let stubedFetch = sinon.stub(window, 'fetch', function() {
            return Promise.resolve({status: 200, json: function() { return {alt: 345} }})
         });
 

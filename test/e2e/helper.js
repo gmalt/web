@@ -30,7 +30,7 @@ module.exports = {
     browser
       .waitForElementVisible('.vue-map-container .gm-style', 8000)
       .execute(this.loadSinon(`
-        let stubedFetch = sinon.stub(window, 'fetch', function() {           
+        let stubedFetch = sinon.stub(window, 'fetch', function() {
            return Promise.resolve({status: 200, json: function() { return {alt: ${altitude}} }})
         });
 
