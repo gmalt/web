@@ -1,18 +1,19 @@
 language: node_js
 
 node_js:
-  - "6"
-  - "7"
-  - "node"
+- '6'
+- '7'
+- node
 
 cache:
   directories:
-    - "node_modules"
+    - node_modules
 
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - cat config/dev.env.js.template | sed -e "s/GOOGLE_MAP_KEY/$GOOGLE_MAP_KEY/g" > config/dev.env.js
 
 install:
   - npm install
@@ -20,3 +21,7 @@ install:
 script:
   - npm run lint
   - npm run test
+
+env:
+  global:
+    secure: uK7Xfbl7b26xVhG0asJn7PXpxaOW07HQqXEPg1DQlKPCJUVmWyRP1fJOIEgn38k25Z4nbfZWs9NgZSkMejobCGjR6k7OPMN+Cs43Dphq3Hlnu94U7SeH+tuZKMUnfjzHqbG2uGsrWF1JZ7jhYOpLdj2+NP60ZHSKIVM4tbixYtBrWADmmlmCES5Bqc4Rddn1n6JklJI21FETq7GNdHYv2ZDb+47ZuPFWIgaUZ7yhfpfqXGPedc5iBH3BoY4kZEioXgTx9Q/2iwGXjI15MbTLsgzJ/b0GOA8IjQ7oAM6CK3uNc1rnjYulIsJVYiyJeuHfDMDamCPRQ3l5G6sMGCNfudZXn4SHFJia6ghP2x13WyqKOQ6RQfljhVRHFMnUpZo9JXlGZkQsEl4HNrrnckZAUXi8PXroSGpiq7X9EjIM5t2RiQrvw2O7qwIgjvBEv4UKd4jCqjsynGAJQkVPVyApuwRZJPBAIdjcowdZxvOj+uPECzRUnfeGpFz3bCd1gu1mMwDjaMlzHw8WSjRPQIXS4q5tp6fnurSs67Lbjmli1qcI20XoQ4m9g0jW8oBkJx8TQgNXObTi8V71UtV9LY8IMfIh/l43FQwaYr1F49raWmO8M0dOP9Uwugtp4hEJnTigj+wh4nRWpPQPvC/pyBoq/xf14Z6ASLf1h9DhIuqLK5g=

@@ -14,3 +14,6 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# Add file manually on installation
+config/dev.env.js
