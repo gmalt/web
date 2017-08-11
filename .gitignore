@@ -15,5 +15,8 @@ selenium-debug.log
 *.njsproj
 *.sln
 
+# deploy
+deploy_key
+
 # Add file manually on installation
 config/dev.env.js
