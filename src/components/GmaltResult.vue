@@ -41,6 +41,7 @@
     watch: {
       position () {
         this.address = ''
+        this.alt = ''
         if (this.lng && this.lat) {
           const requestedPosition = this.position
           GeocodeService
