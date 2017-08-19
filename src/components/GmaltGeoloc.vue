@@ -13,7 +13,8 @@
           pos => this.$emit('geoloc', pos.coords.latitude, pos.coords.longitude),
           () => {
             this.allowedGeolocation = false
-          }
+          },
+          { enableHighAccuracy: true }
         )
       }
     },
